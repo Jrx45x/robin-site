@@ -1,388 +1,562 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>$ROBIN — The People's Bird · Chirp On</title>
-<meta name="description" content="Robin takes from the rich, gives to the people. A fair-launch community memecoin on Robinhood chain. Chirp on." />
-<meta property="og:title" content="$ROBIN — The People's Bird" />
-<meta property="og:description" content="Take from the rich. Give to the people. Chirp on." />
-<meta property="og:image" content="assets/img/og.jpg" />
-<meta name="twitter:card" content="summary_large_image" />
-<link rel="icon" type="image/png" sizes="16x16"  href="assets/img/favicon-16.png?v=2" />
-<link rel="icon" type="image/png" sizes="32x32"  href="assets/img/favicon-32.png?v=2" />
-<link rel="icon" type="image/png" sizes="96x96"  href="assets/img/favicon-96.png?v=2" />
-<link rel="icon" type="image/png" sizes="192x192" href="assets/img/favicon-192.png?v=2" />
-<link rel="apple-touch-icon" sizes="180x180" href="assets/img/favicon-180.png?v=2" />
-<link rel="icon" type="image/png" href="assets/img/favicon.png?v=2" />
-<link rel="preload" as="image" href="assets/img/hero-banner.jpg" fetchpriority="high" />
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Fraunces:opsz,wght@9..144,400;9..144,700;9..144,900&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="css/style.css" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<!-- ============================================================= -->
+<!--  robin-on-robinhood-chain  ·  Google-Docs-style static page   -->
+<!--  Host at: robinrch.xyz                                        -->
+<!-- ============================================================= -->
+
+<title>robin-on-robinhood-chain - Google Docs</title>
+
+<!-- Google Docs favicon (blue doc). Data-URI so there are no external requests. -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect x='12' y='6' width='40' height='52' rx='3' fill='%234285f4'/%3E%3Crect x='20' y='22' width='24' height='3' rx='1.5' fill='white'/%3E%3Crect x='20' y='30' width='24' height='3' rx='1.5' fill='white'/%3E%3Crect x='20' y='38' width='16' height='3' rx='1.5' fill='white'/%3E%3C/svg%3E" />
+
+<!-- ============================================================= -->
+<!--  ▼▼▼  EDIT YOUR TOKEN LINKS HERE  ▼▼▼                          -->
+<!--  These get injected into the File menu on load.               -->
+<!-- ============================================================= -->
+<script>
+  const TOKEN_LINKS = {
+    telegram: "https://t.me/RobinOnRHC",
+    buy:      "https://www.sentry.trading/tokens?chain=robinhood&token=0xF051ea98319b066eB493e191a0E37e24De514f14",
+    twitter:  "https://x.com/robinonrhc",
+    website:  "https://robinrch.xyz"
+  };
+  // Path to the robin image. Replace with your file name if different.
+  const ROBIN_IMG = "robin.png";
+</script>
+<!-- ============================================================= -->
+<!--  ▲▲▲  END EDIT ZONE  ▲▲▲                                      -->
+<!-- ============================================================= -->
+
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    height: 100%;
+    background: #f9fbfd;
+    font-family: "Google Sans", Roboto, Arial, sans-serif;
+    color: #202124;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* ---------- prevent text selection / editing feel ---------- */
+  body { user-select: none; }
+  .page-content { user-select: none; }
+
+  /* ================= TOP BAR ================= */
+  .topbar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 16px 0 16px;
+  }
+  .doc-icon {
+    width: 40px; height: 40px; flex: 0 0 auto;
+  }
+  .title-block { display: flex; flex-direction: column; }
+  .title-row { display: flex; align-items: center; gap: 6px; }
+  .doc-title {
+    font-size: 18px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    cursor: text;
+  }
+  .doc-title:hover { box-shadow: inset 0 0 0 1px #dadce0; }
+  .star { color: #5f6368; font-size: 16px; cursor: pointer; }
+
+  .menubar {
+    display: flex;
+    gap: 2px;
+    font-size: 14px;
+    color: #444746;
+    margin-top: -2px;
+  }
+  .menu-item {
+    padding: 2px 7px;
+    border-radius: 4px;
+    cursor: pointer;
+    position: relative;
+  }
+  .menu-item:hover { background: #eef0f3; }
+
+  .topbar-right { margin-left: auto; display: flex; align-items: center; gap: 12px; }
+  .share-btn {
+    background: #c2e7ff;
+    color: #001d35;
+    border: none;
+    padding: 9px 22px;
+    border-radius: 100px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .share-btn:hover { box-shadow: 0 1px 3px rgba(0,0,0,.2); }
+  .avatar {
+    width: 30px; height: 30px; border-radius: 50%;
+    background: #d93025; color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; cursor: pointer;
+  }
+
+  /* ================= TOOLBAR ================= */
+  .toolbar {
+    margin: 6px 16px;
+    background: #edf2fa;
+    border-radius: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 0 12px;
+    font-size: 14px;
+    color: #444746;
+    overflow: hidden;
+  }
+  .tb-btn {
+    min-width: 28px; height: 28px;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 4px; cursor: pointer; padding: 0 6px;
+  }
+  .tb-btn:hover { background: #dde3ea; }
+  .tb-sep { width: 1px; height: 20px; background: #c7ccd1; margin: 0 4px; }
+  .tb-select {
+    display: flex; align-items: center; gap: 6px;
+    padding: 0 8px; height: 28px; border-radius: 4px; cursor: pointer;
+    white-space: nowrap;
+  }
+  .tb-select:hover { background: #dde3ea; }
+  .tb-zoom { width: 56px; justify-content: space-between; }
+  .tb-font { width: 120px; justify-content: space-between; }
+  .tb-size { width: 46px; justify-content: center; }
+  .caret { font-size: 10px; color: #5f6368; }
+
+  /* ================= LAYOUT ================= */
+  .workspace { display: flex; }
+
+  .sidebar {
+    width: 300px;
+    flex: 0 0 300px;
+    padding: 16px 12px;
+    font-size: 14px;
+    color: #444746;
+  }
+  .sidebar-head {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 6px 8px; font-weight: 500;
+  }
+  .sidebar-head .plus { cursor: pointer; font-size: 18px; }
+  .tab-pill {
+    display: flex; align-items: center; gap: 8px;
+    background: #d3e3fd;
+    color: #041e49;
+    padding: 8px 12px;
+    border-radius: 6px;
+    margin: 8px 0;
+    cursor: pointer;
+  }
+  .sidebar-note {
+    font-size: 12px; color: #80868b; font-style: italic; padding: 4px 12px;
+  }
+
+  .canvas {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 80px;
+  }
+
+  /* ruler */
+  .ruler {
+    width: 816px; max-width: 92vw;
+    height: 16px;
+    background: #fff;
+    border-bottom: 1px solid #e6e6e6;
+    margin-top: 4px;
+    background-image: repeating-linear-gradient(90deg,#c7ccd1 0 1px, transparent 1px 96px);
+    opacity: .5;
+  }
+
+  /* the actual document page */
+  .page {
+    width: 816px;            /* 8.5in @ 96dpi */
+    max-width: 92vw;
+    min-height: 1056px;      /* 11in */
+    background: #fff;
+    margin: 16px 0;
+    box-shadow: 0 1px 3px rgba(60,64,67,.15), 0 4px 8px rgba(60,64,67,.15);
+    padding: 96px 96px;      /* 1in margins */
+  }
+  .page-content {
+    font-family: "Comic Sans MS", "Comic Sans", cursive;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #000;
+  }
+  .robin {
+    display: block;
+    width: 220px;
+    height: auto;
+    margin: 0 auto 8px auto;
+    cursor: pointer;
+    transition: transform .12s ease;
+    -webkit-user-drag: none;
+    user-select: none;
+  }
+  .robin:active { transform: scale(.94); }
+  .robin.wiggle { animation: wiggle .4s ease; }
+  @keyframes wiggle {
+    0%,100% { transform: rotate(0); }
+    25% { transform: rotate(-6deg) scale(1.04); }
+    75% { transform: rotate(6deg) scale(1.04); }
+  }
+  .cap { font-family: inherit; }
+
+  /* ================= DROPDOWN MENUS ================= */
+  .dropdown {
+    position: fixed;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,.2), 0 0 0 1px rgba(0,0,0,.05);
+    padding: 6px 0;
+    min-width: 260px;
+    font-size: 14px;
+    color: #202124;
+    z-index: 1000;
+    display: none;
+  }
+  .dropdown.open { display: block; }
+  .dd-item {
+    display: flex; align-items: center; gap: 14px;
+    padding: 6px 16px; cursor: pointer; white-space: nowrap;
+  }
+  .dd-item:hover { background: #f1f3f4; }
+  .dd-item .ic { width: 20px; text-align: center; color: #5f6368; }
+  .dd-item .sc { margin-left: auto; color: #80868b; font-size: 12px; padding-left: 28px; }
+  .dd-item.link { color: #1a73e8; font-weight: 500; }
+  .dd-item.link .ic { color: #1a73e8; }
+  .dd-sep { height: 1px; background: #e8eaed; margin: 6px 0; }
+
+  /* ================= CHIRP COUNTER ================= */
+  .chirp-counter {
+    position: fixed;
+    bottom: 18px; right: 18px;
+    background: #fff;
+    border-radius: 100px;
+    box-shadow: 0 1px 3px rgba(60,64,67,.3);
+    padding: 10px 18px;
+    font-size: 14px;
+    font-family: Roboto, Arial, sans-serif;
+    color: #202124;
+    z-index: 900;
+    user-select: none;
+  }
+  .chirp-counter b { color: #1a73e8; }
+
+  @media (max-width: 900px) {
+    .sidebar { display: none; }
+  }
+</style>
 </head>
 <body>
 
-<!-- ============== LIVE BACKGROUND — "Robin's Garden" ============== -->
-<div class="bg-fx" aria-hidden="true">
+  <!-- ===================== TOP BAR ===================== -->
+  <div class="topbar">
+    <svg class="doc-icon" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+      <rect x="12" y="6" width="40" height="52" rx="3" fill="#4285f4"/>
+      <rect x="20" y="22" width="24" height="3" rx="1.5" fill="#fff"/>
+      <rect x="20" y="30" width="24" height="3" rx="1.5" fill="#fff"/>
+      <rect x="20" y="38" width="16" height="3" rx="1.5" fill="#fff"/>
+    </svg>
 
-  <!-- L1: warm aurora blobs -->
-  <svg class="bg-fluid" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-    <defs>
-      <filter id="liquidFx" x="-20%" y="-20%" width="140%" height="140%">
-        <feTurbulence type="fractalNoise" baseFrequency="0.006 0.008" numOctaves="2" seed="9" result="noise">
-          <animate attributeName="baseFrequency" dur="44s"
-                   values="0.006 0.008; 0.011 0.005; 0.005 0.012; 0.009 0.007; 0.006 0.008"
-                   repeatCount="indefinite"/>
-        </feTurbulence>
-        <feDisplacementMap in="SourceGraphic" in2="noise" scale="70"/>
-        <feGaussianBlur stdDeviation="20"/>
-      </filter>
-      <radialGradient id="blobA" cx="50%" cy="50%" r="60%">
-        <stop offset="0%" stop-color="#d9552b" stop-opacity="0.16"/>
-        <stop offset="100%" stop-color="#d9552b" stop-opacity="0"/>
-      </radialGradient>
-      <radialGradient id="blobB" cx="50%" cy="50%" r="60%">
-        <stop offset="0%" stop-color="#d9a441" stop-opacity="0.16"/>
-        <stop offset="100%" stop-color="#d9a441" stop-opacity="0"/>
-      </radialGradient>
-      <radialGradient id="blobC" cx="50%" cy="50%" r="60%">
-        <stop offset="0%" stop-color="#4a6b3a" stop-opacity="0.10"/>
-        <stop offset="100%" stop-color="#4a6b3a" stop-opacity="0"/>
-      </radialGradient>
-      <radialGradient id="blobD" cx="50%" cy="50%" r="60%">
-        <stop offset="0%" stop-color="#e8703e" stop-opacity="0.14"/>
-        <stop offset="100%" stop-color="#e8703e" stop-opacity="0"/>
-      </radialGradient>
-    </defs>
-    <g filter="url(#liquidFx)">
-      <circle cx="280"  cy="220" r="380" fill="url(#blobA)"/>
-      <circle cx="1320" cy="640" r="420" fill="url(#blobB)"/>
-      <circle cx="900"  cy="120" r="260" fill="url(#blobC)"/>
-      <circle cx="500"  cy="780" r="320" fill="url(#blobD)"/>
-      <circle cx="1100" cy="380" r="280" fill="url(#blobA)"/>
-    </g>
-  </svg>
-
-  <!-- L2: sun sigils -->
-  <div class="sigil-field">
-    <div class="sigil" style="--sx:12%; --sy:18%; --sr:340px; --sd:0s;  --sp:18s"></div>
-    <div class="sigil" style="--sx:84%; --sy:28%; --sr:280px; --sd:-6s; --sp:22s"></div>
-    <div class="sigil" style="--sx:25%; --sy:72%; --sr:300px; --sd:-12s;--sp:20s"></div>
-    <div class="sigil" style="--sx:72%; --sy:80%; --sr:360px; --sd:-3s; --sp:26s"></div>
-    <div class="sigil" style="--sx:50%; --sy:50%; --sr:420px; --sd:-9s; --sp:30s"></div>
-  </div>
-
-  <!-- L3: rising pollen dust -->
-  <div class="dust-field">
-    <span class="pollen" style="--x:6%;  --d:-3s;  --dur:14s; --s:0.7"></span>
-    <span class="pollen" style="--x:14%; --d:-9s;  --dur:18s; --s:0.5"></span>
-    <span class="pollen" style="--x:22%; --d:-12s; --dur:11s; --s:0.9"></span>
-    <span class="pollen" style="--x:29%; --d:-1s;  --dur:16s; --s:0.6"></span>
-    <span class="pollen" style="--x:36%; --d:-6s;  --dur:13s; --s:0.4"></span>
-    <span class="pollen" style="--x:44%; --d:-15s; --dur:20s; --s:0.8"></span>
-    <span class="pollen" style="--x:51%; --d:-2s;  --dur:12s; --s:0.55"></span>
-    <span class="pollen" style="--x:58%; --d:-8s;  --dur:17s; --s:0.7"></span>
-    <span class="pollen" style="--x:65%; --d:-11s; --dur:14s; --s:0.45"></span>
-    <span class="pollen" style="--x:72%; --d:-4s;  --dur:19s; --s:0.85"></span>
-    <span class="pollen" style="--x:79%; --d:-13s; --dur:15s; --s:0.6"></span>
-    <span class="pollen" style="--x:86%; --d:-7s;  --dur:13s; --s:0.5"></span>
-    <span class="pollen" style="--x:93%; --d:-10s; --dur:18s; --s:0.7"></span>
-    <span class="pollen" style="--x:18%; --d:-17s; --dur:21s; --s:0.4"></span>
-    <span class="pollen" style="--x:48%; --d:-21s; --dur:24s; --s:0.5"></span>
-    <span class="pollen" style="--x:75%; --d:-19s; --dur:22s; --s:0.4"></span>
-  </div>
-
-  <!-- L4: falling feathers -->
-  <div class="feather-field">
-    <span class="feather" style="--x:7%;  --d:-2s;  --dur:20s; --s:0.7;--o:0.5"></span>
-    <span class="feather" style="--x:19%; --d:-15s; --dur:24s; --s:0.9;--o:0.55"></span>
-    <span class="feather" style="--x:31%; --d:-9s;  --dur:22s; --s:0.6;--o:0.45"></span>
-    <span class="feather" style="--x:43%; --d:-18s; --dur:26s; --s:1.0;--o:0.6"></span>
-    <span class="feather" style="--x:55%; --d:-5s;  --dur:21s; --s:0.75;--o:0.5"></span>
-    <span class="feather" style="--x:67%; --d:-13s; --dur:25s; --s:0.65;--o:0.45"></span>
-    <span class="feather" style="--x:79%; --d:-1s;  --dur:23s; --s:0.85;--o:0.55"></span>
-    <span class="feather" style="--x:91%; --d:-11s; --dur:20s; --s:0.55;--o:0.4"></span>
-    <span class="feather" style="--x:25%; --d:-22s; --dur:30s; --s:0.4;--o:0.35"></span>
-    <span class="feather" style="--x:61%; --d:-26s; --dur:28s; --s:0.5;--o:0.4"></span>
-  </div>
-
-  <!-- L5: cursor spotlight -->
-  <div class="cursor-spot"></div>
-
-</div>
-
-<!-- NAV -->
-<header class="nav">
-  <div class="brand-wrap">
-    <a href="#top" class="brand">
-      <span class="brand-mark">$ROBIN</span>
-      <img src="assets/img/robin-portrait.jpg" alt="Robin" class="brand-logo"/>
-    </a>
-    <span class="rhc-badge">ON RHC</span>
-  </div>
-  <nav class="nav-links">
-    <a href="#manifesto">Manifesto</a>
-    <a href="#story">The Story</a>
-    <a href="#sentry">Sentry</a>
-    <a href="https://dexscreener.com/robinhood/0x033fd2D3b3c3D9145430EF969542CE3fe94561aA" target="_blank" rel="noopener">Chart</a>
-    <a href="#buy" class="cta">Buy</a>
-  </nav>
-</header>
-
-<a id="top"></a>
-
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-inner">
-    <div class="hero-stage">
-      <img src="assets/img/hero-banner.jpg" alt="$Robin — chirp chirp chirp" class="hero-banner"
-           width="1280" height="512"
-           decoding="async" loading="eager" fetchpriority="high"/>
-    </div>
-    <p class="kicker">FOR THE FLOCK.</p>
-    <h1>Chirp <span class="rust">on</span>.</h1>
-    <p class="tagline">Take from the rich. Give to the people. Every chirp counts.</p>
-    <div class="hero-cta">
-      <a href="#buy" class="btn btn-primary">Buy $ROBIN</a>
-      <a href="#manifesto" class="btn btn-ghost">Read the Manifesto</a>
-    </div>
-    <p class="chain">On <strong>Robinhood Chain</strong> · Launched on <strong>Sentry.Trading</strong></p>
-  </div>
-</section>
-
-<!-- TRUTHS MARQUEE -->
-<section class="truths" aria-label="Robin Truths">
-  <div class="truths-track">
-    <span>Take From the Rich.</span><span class="dot">●</span>
-    <span class="rust">Give to the People.</span><span class="dot">●</span>
-    <span>Fair Launch.</span><span class="dot">●</span>
-    <span class="rust">Real Community.</span><span class="dot">●</span>
-    <span>Every Chirp Counts.</span><span class="dot">●</span>
-    <span class="rust">Little Bird. Big Plans.</span><span class="dot">●</span>
-    <span>For the Flock.</span><span class="dot">●</span>
-    <span class="rust">Chirp On.</span><span class="dot">●</span>
-    <!-- duplicate for seamless loop -->
-    <span>Take From the Rich.</span><span class="dot">●</span>
-    <span class="rust">Give to the People.</span><span class="dot">●</span>
-    <span>Fair Launch.</span><span class="dot">●</span>
-    <span class="rust">Real Community.</span><span class="dot">●</span>
-    <span>Every Chirp Counts.</span><span class="dot">●</span>
-    <span class="rust">Little Bird. Big Plans.</span><span class="dot">●</span>
-    <span>For the Flock.</span><span class="dot">●</span>
-    <span class="rust">Chirp On.</span><span class="dot">●</span>
-  </div>
-</section>
-
-<!-- PILLARS -->
-<section class="pillars">
-  <div class="pillar">
-    <div class="pillar-icon">🏹</div>
-    <h3>Take From the Rich.</h3>
-    <p>Whales and rug-pullers had their turn. It's the flock's turn now.</p>
-  </div>
-  <div class="pillar">
-    <div class="pillar-icon">🪺</div>
-    <h3>Give to the People.</h3>
-    <p>Fair distribution. Everybody eats. Nobody gets left behind.</p>
-  </div>
-  <div class="pillar">
-    <div class="pillar-icon">🌱</div>
-    <h3>Fair Launch.</h3>
-    <p>No presale. No insider bag. Everyone starts on the same branch.</p>
-  </div>
-  <div class="pillar">
-    <div class="pillar-icon">🪶</div>
-    <h3>Real Community.</h3>
-    <p>Not a stunt. A flock. Built by people who show up every day.</p>
-  </div>
-</section>
-
-<!-- MANIFESTO -->
-<section id="manifesto" class="manifesto">
-  <div class="manifesto-top">
-    <div class="manifesto-text">
-      <span class="eyebrow">THE MOVEMENT</span>
-      <h2>Robin isn't just a coin.</h2>
-      <p>Crypto has a habit of letting the same players win every round. Whales dump. Insiders eat. Retail cleans up the mess.</p>
-      <p>Robin flips the script.</p>
-      <p class="big">Take from the rich.<br/><span class="rust">Give</span> to the people.</p>
-      <p>Fair launch. Fair distribution. Real community. Not because it sounds nice — because it's the only way anything actually lasts.</p>
-      <p>The rich already ate. Now it's the flock's turn.</p>
-      <a href="#buy" class="btn btn-primary">Join the Flock →</a>
-    </div>
-    <div class="manifesto-art">
-      <img src="assets/img/robin-portrait.jpg" alt="Robin the bird" width="1280" height="720"/>
-    </div>
-  </div>
-
-  <div class="manifesto-grid">
-    <div class="manifesto-card">
-      <span class="m-num">01</span>
-      <h4>Fair Launch</h4>
-      <p>No presale. No stealth mint. No team allocation. Zero to hero, together.</p>
-    </div>
-    <div class="manifesto-card">
-      <span class="m-num">02</span>
-      <h4>Fair Distribution</h4>
-      <p>What Robin takes from the whales, Robin gives to the flock. Simple math, honest split.</p>
-    </div>
-    <div class="manifesto-card">
-      <span class="m-num">03</span>
-      <h4>Real Community</h4>
-      <p>Not shilled. Not bought. Built by people who show up every day and chirp louder together.</p>
-    </div>
-  </div>
-
-  <blockquote class="pull-quote">"Not financial advice. Just <span class="rust">fair play</span>."</blockquote>
-</section>
-
-<!-- STORY -->
-<section id="story" class="comic-strip">
-  <div class="section-head">
-    <p class="eyebrow">THE STORY</p>
-    <h2>Little Bird. <span class="rust">Big Plans</span>.</h2>
-    <p class="lead">Meet Robin — the people's bird. Here's how the story goes.</p>
-  </div>
-
-  <article class="panel">
-    <div class="panel-img">
-      <img src="assets/img/robin-portrait.jpg" alt="Robin in the wild" loading="lazy"/>
-    </div>
-    <div class="panel-text">
-      <span class="num">01</span>
-      <h3>Meet Robin.</h3>
-      <p>Small bird. Sharp eyes. Big heart. Robin's been watching the neighborhood — and Robin doesn't like what the whales are doing on the block.</p>
-    </div>
-  </article>
-
-  <article class="panel reverse">
-    <div class="panel-img">
-      <img src="assets/img/robin-logo.jpg" alt="$Robin logo" loading="lazy"/>
-    </div>
-    <div class="panel-text">
-      <span class="num">02</span>
-      <h3>The People's Bird.</h3>
-      <p>Robin isn't a whale. Robin isn't an insider. Robin is you, and me, and every person who's tired of paying to play someone else's game.</p>
-    </div>
-  </article>
-
-  <article class="panel">
-    <div class="panel-img">
-      <img src="assets/img/hero-banner.jpg" alt="$Robin chirping" loading="lazy"/>
-    </div>
-    <div class="panel-text">
-      <span class="num">03</span>
-      <h3>Every Chirp Counts.</h3>
-      <p>One chirp doesn't move markets. A flock of them does. That's the play — small birds, loud together, moving in the same direction.</p>
-    </div>
-  </article>
-</section>
-
-<!-- SENTRY -->
-<section id="sentry" class="sentry">
-  <div class="sentry-inner">
-    <p class="eyebrow">LAUNCHED ON</p>
-    <h2>Sentry.<span class="rust">Trading</span>.</h2>
-    <p class="lead">$ROBIN launched on <strong>Sentry.Trading</strong> — a launch platform on Robinhood chain. Every token that launches on Sentry strengthens the platform and the <strong>$SENTRY</strong> token along with it. Buying $ROBIN on Sentry aims two arrows with one draw.</p>
-
-    <div class="sentry-grid">
-      <div class="sentry-card">
-        <div class="sentry-num">01</div>
-        <h4>A Launch Platform</h4>
-        <p>Sentry isn't just a swap venue — it's where new Robinhood-chain projects get rolled out. $ROBIN is one of them.</p>
+    <div class="title-block">
+      <div class="title-row">
+        <span class="doc-title">robin-on-robinhood-chain</span>
+        <span class="star">☆</span>
       </div>
-      <div class="sentry-card">
-        <div class="sentry-num">02</div>
-        <h4>Tokens Launched = Sentry Wins</h4>
-        <p>Every launch feeds the platform — and the $SENTRY token. Support the branch, support the nest.</p>
-      </div>
-      <div class="sentry-card">
-        <div class="sentry-num">03</div>
-        <h4>Where the Flock Meets</h4>
-        <p>Active. Growing. The main hub for launches and trades on Robinhood chain.</p>
+      <div class="menubar" id="menubar">
+        <div class="menu-item" data-menu="file">File</div>
+        <div class="menu-item" data-menu="edit">Edit</div>
+        <div class="menu-item" data-menu="view">View</div>
+        <div class="menu-item" data-menu="insert">Insert</div>
+        <div class="menu-item" data-menu="format">Format</div>
+        <div class="menu-item" data-menu="tools">Tools</div>
+        <div class="menu-item" data-menu="extensions">Extensions</div>
+        <div class="menu-item" data-menu="help">Help</div>
       </div>
     </div>
 
-    <div class="sentry-cta">
-      <a href="https://www.sentry.trading/tokens?chain=robinhood&token=0xF051ea98319b066eB493e191a0E37e24De514f14" target="_blank" rel="noopener" class="btn btn-primary">Buy $ROBIN on Sentry →</a>
-      <a href="#buy" class="btn btn-ghost">See buy steps</a>
-    </div>
-  </div>
-</section>
-
-<!-- BUY -->
-<section id="buy" class="buy">
-  <div class="buy-head">
-    <p class="eyebrow">HOW TO BUY</p>
-    <h2>Join the <span class="rust">Flock</span>.</h2>
-    <p class="lead">$ROBIN on <strong>Robinhood chain</strong>. Easiest path: <a href="https://www.sentry.trading/tokens?chain=robinhood&token=0xF051ea98319b066eB493e191a0E37e24De514f14" target="_blank" rel="noopener">Sentry.Trading</a>.</p>
-  </div>
-
-  <div class="ca-card">
-    <label>Contract Address</label>
-    <div class="ca-row">
-      <code id="caText">0xF051ea98319b066eB493e191a0E37e24De514f14</code>
-      <button id="copyBtn" type="button" data-copy="0xF051ea98319b066eB493e191a0E37e24De514f14">Copy</button>
-    </div>
-    <p class="ca-note">Always verify the contract from official sources. Network: <strong>Robinhood Chain</strong>.</p>
-  </div>
-
-  <div class="steps">
-    <div class="step">
-      <div class="step-num">01</div>
-      <h4>Open Sentry.Trading</h4>
-      <p>Spin up a Robinhood-chain wallet in seconds — no browser-extension gauntlet required.</p>
-    </div>
-    <div class="step">
-      <div class="step-num">02</div>
-      <h4>Fund the Nest</h4>
-      <p>Bridge or deposit into your Robinhood-chain wallet through Sentry.</p>
-    </div>
-    <div class="step">
-      <div class="step-num">03</div>
-      <h4>Buy $ROBIN</h4>
-      <p>Paste the contract above, confirm the swap. Welcome to the flock.</p>
+    <div class="topbar-right">
+      <button class="share-btn">🔒 Share ▾</button>
+      <div class="avatar">R</div>
     </div>
   </div>
 
-  <div class="dex-cta">
-    <h3>See the Chart.</h3>
-    <p>Live price, liquidity, and the flock at work.</p>
-    <div class="dex-buttons">
-      <a class="btn btn-primary" href="https://dexscreener.com/robinhood/0x033fd2D3b3c3D9145430EF969542CE3fe94561aA" target="_blank" rel="noopener">View on DexScreener</a>
-      <a class="btn btn-ghost" href="https://x.com/robinonrhc" target="_blank" rel="noopener">Follow on X</a>
-      <a class="btn btn-ghost" href="https://t.me/RobinOnRHC" target="_blank" rel="noopener">Join Telegram</a>
-      <a class="btn btn-ghost" href="https://www.sentry.trading/tokens?chain=robinhood&token=0xF051ea98319b066eB493e191a0E37e24De514f14" target="_blank" rel="noopener">Trade on Sentry</a>
+  <!-- ===================== TOOLBAR ===================== -->
+  <div class="toolbar">
+    <div class="tb-btn" title="Undo">↶</div>
+    <div class="tb-btn" title="Redo">↷</div>
+    <div class="tb-btn" title="Print">🖨</div>
+    <div class="tb-btn" title="Spell check">✔</div>
+    <div class="tb-select tb-zoom">100% <span class="caret">▾</span></div>
+    <div class="tb-sep"></div>
+    <div class="tb-select">Normal text <span class="caret">▾</span></div>
+    <div class="tb-sep"></div>
+    <div class="tb-select tb-font">Comic Sans MS <span class="caret">▾</span></div>
+    <div class="tb-sep"></div>
+    <div class="tb-btn">−</div>
+    <div class="tb-select tb-size">14</div>
+    <div class="tb-btn">+</div>
+    <div class="tb-sep"></div>
+    <div class="tb-btn" style="font-weight:700">B</div>
+    <div class="tb-btn" style="font-style:italic">I</div>
+    <div class="tb-btn" style="text-decoration:underline">U</div>
+    <div class="tb-btn" title="Text color" style="color:#1a73e8">A</div>
+    <div class="tb-sep"></div>
+    <div class="tb-btn" title="Link">🔗</div>
+    <div class="tb-btn" title="Comment">💬</div>
+    <div class="tb-btn" title="Image">🖼</div>
+    <div class="tb-sep"></div>
+    <div class="tb-btn" title="Align">≣</div>
+    <div class="tb-btn" title="List">☰</div>
+  </div>
+
+  <!-- ===================== WORKSPACE ===================== -->
+  <div class="workspace">
+    <!-- left sidebar -->
+    <div class="sidebar">
+      <div class="sidebar-head">
+        <span>Document tabs</span>
+        <span class="plus">＋</span>
+      </div>
+      <div class="tab-pill">📄 Tab 1</div>
+      <div class="sidebar-note">Headings you add to the document will appear here.</div>
+    </div>
+
+    <!-- document canvas -->
+    <div class="canvas">
+      <div class="ruler"></div>
+      <div class="page">
+        <div class="page-content">
+          <img id="robin" class="robin" alt="this is robin" draggable="false" />
+          <p class="cap">this is robin</p>
+          <p class="cap">ca:0xF051ea98319b066eB493e191a0E37e24De514f14</p>
+        </div>
+      </div>
     </div>
   </div>
 
-  <div class="dex-embed">
-    <iframe
-      src="https://dexscreener.com/robinhood/0x033fd2D3b3c3D9145430EF969542CE3fe94561aA?embed=1&theme=dark&trades=0&info=0"
-      title="DexScreener chart"
-      loading="lazy"></iframe>
-  </div>
-</section>
+  <!-- ===================== CHIRP COUNTER ===================== -->
+  <div class="chirp-counter">🐦 chirps: <b id="chirpCount">0</b></div>
 
-<!-- FOOTER -->
-<footer class="footer">
-  <div class="footer-brand">
-    <span class="brand-mark">$ROBIN</span>
-    <p>Not financial advice. Just fair play.</p>
-  </div>
-  <div class="footer-links">
-    <a href="https://x.com/robinonrhc" target="_blank" rel="noopener">X / Twitter</a>
-    <a href="https://t.me/RobinOnRHC" target="_blank" rel="noopener">Telegram</a>
-    <a href="https://dexscreener.com/robinhood/0x033fd2D3b3c3D9145430EF969542CE3fe94561aA" target="_blank" rel="noopener">Chart</a>
-    <a href="https://www.sentry.trading/tokens?chain=robinhood&token=0xF051ea98319b066eB493e191a0E37e24De514f14" target="_blank" rel="noopener">Sentry.Trading</a>
-    <a href="#buy">Buy</a>
-    <a href="#manifesto">Manifesto</a>
-  </div>
-  <p class="ca">CA: <code>0xF051ea98319b066eB493e191a0E37e24De514f14</code></p>
-  <p class="fineprint">$ROBIN is a memecoin on Robinhood chain. No promises. Chirp on.</p>
-</footer>
+  <!-- Dropdown containers (populated by JS) -->
+  <div id="dropdown" class="dropdown"></div>
 
-<script src="js/main.js"></script>
+<script>
+  /* ---------- set the robin image src from the config ---------- */
+  document.getElementById("robin").src = ROBIN_IMG;
+
+  /* ================= DROPDOWN MENU DATA ================= */
+  // The File menu carries the REAL token links (from TOKEN_LINKS above).
+  const MENUS = {
+    file: [
+      { label: "Telegram",   icon: "✈️", href: TOKEN_LINKS.telegram, link: true },
+      { label: "Buy $ROBIN", icon: "💰", href: TOKEN_LINKS.buy,      link: true },
+      { label: "Twitter / X",icon: "𝕏",  href: TOKEN_LINKS.twitter,  link: true },
+      { label: "Website",    icon: "🌐", href: TOKEN_LINKS.website,  link: true },
+      { sep: true },
+      { label: "New",         icon: "＋", sc: "" },
+      { label: "Open",        icon: "📂", sc: "Ctrl+O" },
+      { label: "Make a copy", icon: "🗐", sc: "" },
+      { label: "Download",    icon: "⬇", sc: "" },
+      { sep: true },
+      { label: "Print",       icon: "🖨", sc: "Ctrl+P" },
+    ],
+    edit: [
+      { label: "Undo", icon: "↶", sc: "Ctrl+Z" },
+      { label: "Redo", icon: "↷", sc: "Ctrl+Y" },
+      { sep: true },
+      { label: "Cut",   icon: "✂", sc: "Ctrl+X" },
+      { label: "Copy",  icon: "🗐", sc: "Ctrl+C" },
+      { label: "Paste", icon: "📋", sc: "Ctrl+V" },
+      { sep: true },
+      { label: "Select all", icon: "▦", sc: "Ctrl+A" },
+      { label: "Find and replace", icon: "🔍", sc: "Ctrl+H" },
+    ],
+    view: [
+      { label: "Show ruler", icon: "✔" },
+      { label: "Show outline", icon: "✔" },
+      { label: "Mode: Editing", icon: "✎" },
+      { sep: true },
+      { label: "Full screen", icon: "⛶" },
+    ],
+    insert: [
+      { label: "Image", icon: "🖼" },
+      { label: "Table", icon: "▦" },
+      { label: "Drawing", icon: "✏" },
+      { label: "Link", icon: "🔗", sc: "Ctrl+K" },
+      { sep: true },
+      { label: "Special characters", icon: "Ω" },
+    ],
+    format: [
+      { label: "Text", icon: "A" },
+      { label: "Paragraph styles", icon: "¶" },
+      { label: "Align & indent", icon: "≣" },
+      { label: "Line & paragraph spacing", icon: "↕" },
+      { sep: true },
+      { label: "Clear formatting", icon: "⌫", sc: "Ctrl+\\" },
+    ],
+    tools: [
+      { label: "Spelling and grammar", icon: "✔" },
+      { label: "Word count", icon: "#", sc: "Ctrl+Shift+C" },
+      { label: "Voice typing", icon: "🎤" },
+      { sep: true },
+      { label: "Preferences", icon: "⚙" },
+    ],
+    extensions: [
+      { label: "Add-ons", icon: "🧩" },
+      { label: "Apps Script", icon: "{ }" },
+      { label: "Gemini", icon: "✦" },
+    ],
+    help: [
+      { label: "Help", icon: "?" },
+      { label: "Training", icon: "🎓" },
+      { label: "Updates", icon: "↻" },
+      { sep: true },
+      { label: "About robin", icon: "🐦" },
+    ],
+  };
+
+  const dropdown = document.getElementById("dropdown");
+  let openMenu = null;
+
+  function buildDropdown(key) {
+    const items = MENUS[key] || [];
+    dropdown.innerHTML = "";
+    items.forEach(it => {
+      if (it.sep) {
+        const s = document.createElement("div");
+        s.className = "dd-sep";
+        dropdown.appendChild(s);
+        return;
+      }
+      const row = document.createElement(it.href ? "a" : "div");
+      row.className = "dd-item" + (it.link ? " link" : "");
+      if (it.href) {
+        row.href = it.href;
+        row.target = "_blank";
+        row.rel = "noopener noreferrer";
+        row.style.textDecoration = "none";
+      }
+      row.innerHTML =
+        `<span class="ic">${it.icon || ""}</span>` +
+        `<span>${it.label}</span>` +
+        (it.sc ? `<span class="sc">${it.sc}</span>` : "");
+      // non-link items just close the menu when clicked (they're for show)
+      if (!it.href) row.addEventListener("click", closeMenu);
+      dropdown.appendChild(row);
+    });
+  }
+
+  function openMenuAt(el, key) {
+    buildDropdown(key);
+    const r = el.getBoundingClientRect();
+    dropdown.style.left = r.left + "px";
+    dropdown.style.top = (r.bottom + 4) + "px";
+    dropdown.classList.add("open");
+    openMenu = key;
+    // keep it on-screen
+    const dr = dropdown.getBoundingClientRect();
+    if (dr.right > window.innerWidth - 8) {
+      dropdown.style.left = (window.innerWidth - dr.width - 8) + "px";
+    }
+  }
+
+  function closeMenu() {
+    dropdown.classList.remove("open");
+    openMenu = null;
+  }
+
+  document.querySelectorAll(".menu-item").forEach(el => {
+    el.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const key = el.dataset.menu;
+      if (openMenu === key) { closeMenu(); return; }
+      openMenuAt(el, key);
+    });
+    // hover-to-switch once a menu is already open (like real Docs)
+    el.addEventListener("mouseenter", () => {
+      if (openMenu && openMenu !== el.dataset.menu) openMenuAt(el, el.dataset.menu);
+    });
+  });
+
+  document.addEventListener("click", (e) => {
+    if (!dropdown.contains(e.target)) closeMenu();
+  });
+  window.addEventListener("resize", closeMenu);
+
+  /* ================= CHIRP: sound + counter ================= */
+  const robin = document.getElementById("robin");
+  const chirpCountEl = document.getElementById("chirpCount");
+
+  // per-session counter
+  let chirps = parseInt(sessionStorage.getItem("chirps") || "0", 10);
+  chirpCountEl.textContent = chirps;
+
+  let audioCtx = null;
+  function ensureAudio() {
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    if (audioCtx.state === "suspended") audioCtx.resume();
+    return audioCtx;
+  }
+
+  // a short, sweet two-note rising chirp built from oscillators
+  function playChirp() {
+    const ctx = ensureAudio();
+    const now = ctx.currentTime;
+    const notes = [
+      { start: 0.00, f0: 1400, f1: 2600, dur: 0.09 },
+      { start: 0.11, f0: 1700, f1: 3000, dur: 0.10 },
+    ];
+    notes.forEach(n => {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = "sine";
+      osc.frequency.setValueAtTime(n.f0, now + n.start);
+      osc.frequency.exponentialRampToValueAtTime(n.f1, now + n.start + n.dur * 0.7);
+      osc.frequency.exponentialRampToValueAtTime(n.f0 * 0.8, now + n.start + n.dur);
+      gain.gain.setValueAtTime(0.0001, now + n.start);
+      gain.gain.exponentialRampToValueAtTime(0.25, now + n.start + 0.015);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + n.start + n.dur);
+      osc.connect(gain).connect(ctx.destination);
+      osc.start(now + n.start);
+      osc.stop(now + n.start + n.dur + 0.02);
+    });
+  }
+
+  robin.addEventListener("click", () => {
+    playChirp();
+    chirps++;
+    sessionStorage.setItem("chirps", chirps);
+    chirpCountEl.textContent = chirps;
+    robin.classList.remove("wiggle");
+    void robin.offsetWidth;      // restart animation
+    robin.classList.add("wiggle");
+  });
+
+  /* ================= block editing/selection ================= */
+  document.addEventListener("selectstart", (e) => {
+    if (e.target.closest(".page-content")) e.preventDefault();
+  });
+  document.querySelector(".page-content").addEventListener("copy", (e) => {
+    // allow the CA to be copied but nothing gets edited
+  });
+</script>
 </body>
 </html>
