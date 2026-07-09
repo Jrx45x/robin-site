@@ -21,9 +21,8 @@
 <script>
   const TOKEN_LINKS = {
     telegram: "https://t.me/RobinOnRHC",
-    buy:      "https://www.sentry.trading/tokens?chain=robinhood&token=0xF051ea98319b066eB493e191a0E37e24De514f14",
-    twitter:  "https://x.com/robinonrhc",
-    website:  "https://robinrch.xyz"
+    buy:      "https://www.sentry.trading/swap?chain=robinhood&token=0xF051ea98319b066eB493e191a0E37e24De514f14",
+    twitter:  "https://x.com/robinonrhc"
   };
   // Path to the robin image. Replace with your file name if different.
   const ROBIN_IMG = "robin.png";
@@ -203,7 +202,7 @@
     display: block;
     width: 220px;
     height: auto;
-    margin: 0 auto 8px auto;
+    margin: 0 0 8px 0;
     cursor: pointer;
     transition: transform .12s ease;
     -webkit-user-drag: none;
@@ -217,6 +216,20 @@
     75% { transform: rotate(6deg) scale(1.04); }
   }
   .cap { font-family: inherit; }
+  .ca {
+    cursor: pointer;
+    border-bottom: 1px dashed #999;
+  }
+  .ca:hover { background: #fff3c4; }
+  .copied {
+    font-family: Roboto, Arial, sans-serif;
+    font-size: 12px;
+    color: #188038;
+    margin-left: 8px;
+    opacity: 0;
+    transition: opacity .15s ease;
+  }
+  .copied.show { opacity: 1; }
 
   /* ================= DROPDOWN MENUS ================= */
   .dropdown {
@@ -261,6 +274,60 @@
 
   @media (max-width: 900px) {
     .sidebar { display: none; }
+  }
+
+  /* ================= MOBILE ================= */
+  @media (max-width: 600px) {
+    .topbar { padding: 6px 10px 0 10px; gap: 6px; }
+    .doc-icon { width: 32px; height: 32px; }
+    .doc-title { font-size: 15px; max-width: 46vw; white-space: nowrap;
+                 overflow: hidden; text-overflow: ellipsis; }
+
+    /* menu bar scrolls sideways instead of wrapping */
+    .menubar {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      flex-wrap: nowrap;
+      max-width: 100%;
+    }
+    .menubar::-webkit-scrollbar { display: none; }
+    .menu-item { flex: 0 0 auto; }
+
+    /* trim the top-right so the row fits */
+    .share-btn { padding: 8px 14px; font-size: 13px; }
+
+    /* toolbar becomes a horizontal scroll strip */
+    .toolbar {
+      margin: 6px 8px;
+      overflow-x: auto;
+      overflow-y: hidden;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      justify-content: flex-start;
+    }
+    .toolbar::-webkit-scrollbar { display: none; }
+    .tb-btn, .tb-select { flex: 0 0 auto; }
+
+    /* page fills the screen with comfortable margins */
+    .page {
+      width: 100%;
+      max-width: 100%;
+      min-height: auto;
+      margin: 10px 0;
+      padding: 40px 24px;
+      box-shadow: none;
+      border-top: 1px solid #e6e6e6;
+    }
+    .canvas { padding: 0 8px 90px 8px; }
+    .ruler { display: none; }
+
+    .robin { width: 160px; }
+
+    .chirp-counter { bottom: 12px; right: 12px; padding: 8px 14px; font-size: 13px; }
+
+    /* let the long CA wrap instead of overflowing */
+    .ca { word-break: break-all; }
   }
 </style>
 </head>
@@ -346,7 +413,7 @@
         <div class="page-content">
           <img id="robin" class="robin" alt="this is robin" draggable="false" />
           <p class="cap">this is robin</p>
-          <p class="cap">ca:0xF051ea98319b066eB493e191a0E37e24De514f14</p>
+          <p class="cap">ca:<span id="ca" class="ca" title="Click to copy">0xF051ea98319b066eB493e191a0E37e24De514f14</span><span id="copied" class="copied">Copied!</span></p>
         </div>
       </div>
     </div>
@@ -369,7 +436,6 @@
       { label: "Telegram",   icon: "✈️", href: TOKEN_LINKS.telegram, link: true },
       { label: "Buy $ROBIN", icon: "💰", href: TOKEN_LINKS.buy,      link: true },
       { label: "Twitter / X",icon: "𝕏",  href: TOKEN_LINKS.twitter,  link: true },
-      { label: "Website",    icon: "🌐", href: TOKEN_LINKS.website,  link: true },
       { sep: true },
       { label: "New",         icon: "＋", sc: "" },
       { label: "Open",        icon: "📂", sc: "Ctrl+O" },
@@ -548,6 +614,29 @@
     robin.classList.remove("wiggle");
     void robin.offsetWidth;      // restart animation
     robin.classList.add("wiggle");
+  });
+
+  /* ================= click-to-copy contract address ================= */
+  const caEl = document.getElementById("ca");
+  const copiedEl = document.getElementById("copied");
+  caEl.addEventListener("click", async () => {
+    const text = caEl.textContent.trim();
+    try {
+      await navigator.clipboard.writeText(text);
+    } catch (err) {
+      // fallback for older browsers / non-secure contexts
+      const ta = document.createElement("textarea");
+      ta.value = text;
+      ta.style.position = "fixed";
+      ta.style.opacity = "0";
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand("copy");
+      document.body.removeChild(ta);
+    }
+    copiedEl.classList.add("show");
+    clearTimeout(caEl._t);
+    caEl._t = setTimeout(() => copiedEl.classList.remove("show"), 1400);
   });
 
   /* ================= block editing/selection ================= */
